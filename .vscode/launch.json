@@ -1,0 +1,89 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "make secstr and adj",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "cwd": "${fileDirname}/../examples/",
+            "console": "integratedTerminal",
+            "args": [
+                    "--input_pdb", "input_pdbs/6cnw_A-nanobody_template.pdb",
+                    "--out_dir", "nanobodyManPPI",
+                    "--ssString", "LEEEEEELEEELLLLEEEEELEEEELLLLLLLLEEEEEELLLLLLEEEELLLLLLLEEEELLLLLLEEEEEEELLLEEEEEEELLLLLLLEEEEELLLLLLLLLLEEELEEEEEEL"
+            ]
+        },
+        {
+            "name": "Motif Scaffolding",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "cwd": "${fileDirname}/../examples/",
+            "console": "integratedTerminal",
+            "args": [
+                    "inference.output_prefix=example_outputs/Nav18_pose3-test",
+                    "inference.input_pdb=input_pdbs/Nav18_Nb-pose3.pdb",
+                    "contigmap.contigs=[A1-25/2-10/A34-50/3-12/A58-95/5-20/A106-116/0 B670-717/0 B731-764/0 B1288-1406]",
+                    "contigmap.inpaint_seq=[A1-25/A34-50/A58-95/A106-116]",
+                    "ppi.hotspot_res=[B682,B701,B756,B760,B1297]",
+                    "contigmap.length=108-120",
+                    "inference.ckpt_override_path=../models/Complex_base_ckpt.pt",
+                    "inference.num_designs=10"],
+            "justMyCode": true
+        },
+        {
+            "name": "PPI with fold conditioning",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "cwd": "${fileDirname}/../examples/",
+            "console": "integratedTerminal",
+            "args": [
+                    "scaffoldguided.target_path=input_pdbs/7we4_region1.pdb",
+                    "inference.input_pdb=input_pdbs/6cnw_A-nanobody_template.pdb",
+                    "inference.output_prefix=example_outputs/testChannel",
+                    "scaffoldguided.scaffoldguided=True",
+                    "ppi.hotspot_res=[A1317,A1318,A824,A855]",
+                    "scaffoldguided.target_pdb=True",
+                    "scaffoldguided.target_ss=target_folds/nav18_ECD_ss.pt",
+                    "scaffoldguided.target_adj=target_folds/nav18_ECD_adj.pt",
+                    "scaffoldguided.scaffold_dir=./nanobodyManPPI/",
+                    "scaffoldguided.sampled_insertion=[0,0,0,0,'4-8',0,'4-10',0,0,0,'6-15',0,0]",
+                    "scaffoldguided.mask_loops=True",
+                    "inference.num_designs=10",
+                    "denoiser.noise_scale_ca=0",
+                    "denoiser.noise_scale_frame=0"
+            ]
+        },
+        {
+            "name": "Fold conditioning",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "cwd": "${fileDirname}/../examples/",
+            "console": "integratedTerminal",
+            "args": [
+                    "inference.input_pdb=input_pdbs/6cnw_A-nanobody_template.pdb",
+                    "inference.output_prefix=example_outputs/testFCNanobody",
+                    "scaffoldguided.scaffoldguided=True",
+                    "scaffoldguided.scaffold_dir=./nanobodyManPPI/",
+                    "contigmap.contigs=[A1-25/8-8/A34-50/7-7/A58-95/10-10/A106-116]",
+                    "inference.num_designs=10",
+                    "denoiser.noise_scale_ca=0",
+                    "denoiser.noise_scale_frame=0"
+            ]
+        }
+    ]
+}
